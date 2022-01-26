@@ -66,7 +66,7 @@
                     "type": "variables",
                     "apiVersion": "2019-06-01",
                     "dependsOn": [
-                        "resourceId('Microsoft.Automation/automationAccounts/')"
+                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
                     ],
                     "properties": {
                         "description": "[variables('assets').aaVariables.AzureSubscriptionId.description]",
