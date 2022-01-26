@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "automationAccountName": {
+            "value": "LU-AA-BillingScript" // TODO: Fill in parameter value
+        },
+        "modulesUri": {
+            "value": "https://devopsgallerystorage.blob.core.windows.net/packages/"
+        },
+        "automationRegion": {
+            "value": "uksouth" // TODO: Fill in parameter value
+        }
+    }
+}
