@@ -41,7 +41,7 @@
             "runbooks": [
                 {
                     "name": "billingscript",
-                    "url": "concat('scripts/billingscript.ps1')",
+                    "url": "https://github.com/kazuple/lu-az-aa-billingscript/blob/main/scripts/billingscript.ps1",
                     "version": "1.0.0.0",
                     "type": "PowerShell",
                     "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
@@ -53,7 +53,7 @@
         {
             "name": "[parameters('automationAccountName')]",
             "type": "Microsoft.Automation/automationAccounts",
-            "apiVersion": "2021-04-01",
+            "apiVersion": "2019-06-01",
             "location": "[parameters('automationRegion')]",
             "properties": {
                 "sku": {
@@ -64,7 +64,7 @@
                 {
                     "name": "[variables('assets').aaVariables.AzureSubscriptionId.name]",
                     "type": "variables",
-                    "apiVersion": "2021-04-01",
+                    "apiVersion": "2019-06-01",
                     "dependsOn": [
                         "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
                     ],
