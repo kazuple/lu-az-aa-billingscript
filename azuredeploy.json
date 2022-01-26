@@ -81,7 +81,7 @@
             "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks[copyIndex()].Name)]",
             "location": "[parameters('automationRegion')]",
             "dependsOn": [
-                "resourceId('Microsoft.Automation/automationAccounts/')"
+                "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             ],
             "copy": {
                 "name": "runbooksLoop",
