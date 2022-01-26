@@ -41,7 +41,7 @@
             "runbooks": [
                 {
                     "name": "billingscript",
-                    "url": "https://github.com/kazuple/lu-az-aa-billingscript/blob/main/scripts/billingscript.ps1",
+                    "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/billingscript.ps1",
                     "version": "1.0.0.0",
                     "type": "PowerShell",
                     "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
