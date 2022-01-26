@@ -8,13 +8,6 @@
                 "description": "Specify the name of your Automation Account"
             }
         },
-        "modulesUri": {
-            "type": "string",
-            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
-            "metadata": {
-                "description": "Default modules URI"
-            }
-        },
         "automationRegion": {
             "type": "string",
             "allowedValues": [
@@ -32,12 +25,6 @@
             ],
             "metadata": {
                 "description": "Specify the region for your automation account"
-            },
-        "_artifactsLocation": {
-            "type": "string",
-            "defaultValue": "[deployment().properties.templateLink.uri]",
-            "metadata": {
-                "description": "URI to artifacts location"
             }
         }
     },
@@ -54,13 +41,14 @@
             "runbooks": [
                 {
                     "name": "billingscript",
-                    "url": "[uri(parameters('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
+                    "url": "concat('scripts/billingscript.ps1')",
                     "version": "1.0.0.0",
                     "type": "PowerShell",
                     "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
                 }
             ]    
-        }, 
+        }
+    },
     "resources": [
         {
             "name": "[parameters('automationAccountName')]",
@@ -88,7 +76,7 @@
             ]
         },
         {
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2019-06-01",
             "type": "Microsoft.Automation/automationAccounts/runbooks",
             "name": "[concat(parameters('automationAccountName'), '/']",
             "location": "[parameters('automationRegion')]",
@@ -108,6 +96,4 @@
         }
     ],
     "outputs": {}
-}
-}
 }
