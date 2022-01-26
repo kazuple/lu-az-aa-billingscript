@@ -66,7 +66,7 @@
                     "type": "variables",
                     "apiVersion": "2019-06-01",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+                        "resourceId('Microsoft.Automation/automationAccounts/')"
                     ],
                     "properties": {
                         "description": "[variables('assets').aaVariables.AzureSubscriptionId.description]",
@@ -81,7 +81,7 @@
             "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks[copyIndex()].Name)]",
             "location": "[parameters('automationRegion')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+                "resourceId('Microsoft.Automation/automationAccounts/')"
             ],
             "copy": {
                 "name": "runbooksLoop",
