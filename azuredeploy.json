@@ -4,7 +4,6 @@
     "parameters": {
         "automationAccountName": {
             "type": "string",
-            "defaultValue": "test",
             "metadata": {
                 "description": "Specify the name of your Automation Account"
             }

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "automationAccountName": {
-            "value": "test"
+            "value": "LU-AA-BillingScript"
           },
         "automationRegion": {
             "value": "uksouth" 
