@@ -78,11 +78,15 @@
         {
             "apiVersion": "2019-06-01",
             "type": "Microsoft.Automation/automationAccounts/runbooks",
-            "name": "[concat(parameters('automationAccountName'), '/']",
+            "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks[copyIndex()].Name)]",
             "location": "[parameters('automationRegion')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             ],
+            "copy": {
+                "name": "runbooksLoop",
+                "count": "[length(variables('luScripts').runbooks)]"
+            },
             "properties": {
                 "description": "[variables('luScripts').runbooks[copyIndex()].description]",
                 "runbookType": "[variables('luScripts').runbooks[copyIndex()].type]",
