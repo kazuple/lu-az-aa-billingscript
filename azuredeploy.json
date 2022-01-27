@@ -39,9 +39,13 @@
     "variables": {
         "assets": {
             "aaVariables": {
-                "AzureSubscriptionId": {
-                    "name": "AzureSubscriptionId",
-                    "description": "Azure subscription Id"
+                "luServiceAccountUsername": {
+                    "name": "luServiceAccountUsername",
+                    "description": "LoopUp Service Account: Username"
+                },
+                "luServiceAccountPassword": {
+                    "name": "luServiceAccountPassword",
+                    "description": "LoopUp Service Account: Password"
                 }
             }
         },
@@ -70,15 +74,28 @@
             },
             "resources": [
                 {
-                    "name": "[variables('assets').aaVariables.AzureSubscriptionId.name]",
+                    "name": "[variables('assets').aaVariables.luServiceAccountUsername.name]",
                     "type": "variables",
                     "apiVersion": "2019-06-01",
                     "dependsOn": [
                         "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
                     ],
                     "properties": {
-                        "description": "[variables('assets').aaVariables.AzureSubscriptionId.description]",
+                        "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]",
                         "value": "[concat('\"',subscription().subscriptionId,'\"')]"
+                    }
+                },
+                {
+                    "name": "[variables('assets').aaVariables.luServiceAccountPassword.name]",
+                    "type": "variables",
+                    "apiVersion": "2019-06-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+                    ],
+                    "properties": {
+                        "description": "[variables('assets').aaVariables.luServiceAccountPassword.description]",
+                        "value": "[concat('\"',subscription().subscriptionId,'\"')]",
+                        "isEncrypted": true
                     }
                 }
             ]
