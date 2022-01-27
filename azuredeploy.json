@@ -81,8 +81,7 @@
                         "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
                     ],
                     "properties": {
-                        "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]",
-                        "value": "[concat('\"',subscription().subscriptionId,'\"')]"
+                        "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]"
                     }
                 },
                 {

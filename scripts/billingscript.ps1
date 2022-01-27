@@ -4,13 +4,13 @@ Import-Module MicrosoftTeams
 
 #Get Automation Account Variables (LUCT TLD)
 $luServiceAccountUsername = Get-AutomationVariable -Name 'luServiceAccountUsername'
-$luServiceAccountPW = Get-AutomationVariable -Name 'luServiceAccountPW'
+$luServiceAccountPassword = Get-AutomationVariable -Name 'luServiceAccountPW'
 
 #LoopUp Endpoint URL
 $endpointUrl = "https://prod-166.westus.logic.azure.com:443/workflows/7c0497e062234ff2ae617fd21231e89b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1eveUH7pqDXn0lrY9dspfuMXBeTIwPgrMAynFPP-5Lo"
 
 #Teams PowerShell
-$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $luServiceAccountUsername, $luServiceAccountPW
+$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $luServiceAccountUsername, $luServiceAccountPassword
 Connect-MicrosoftTeams -Credential $credential
 
 
