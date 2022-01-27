@@ -41,6 +41,13 @@
             "metadata": {
                 "description": "Default PowerShell Gallery Modules URI"
             }
+        },
+        "jobGuid": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "GUID for the schedule creation - create a unique before deploy"
+            }
         }
     },
     "variables": {
@@ -73,35 +80,6 @@
                 }
     },
     "resources": [
-        {
-            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'))]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "runbook": {
-                    "name": "billingscript"
-                },
-                "schedule": {
-                    "name": "LoopUp Billing Script Schedule"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Automation/automationAccounts/modules",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/', variables('MicrosoftTeams').name)]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "contentLink": {
-                    "uri": "[variables('MicrosoftTeams').url]"
-                }
-            }
-        },
         {
             "name": "[parameters('automationAccountName')]",
             "type": "Microsoft.Automation/automationAccounts",
@@ -138,6 +116,35 @@
                     }
                 }
             ]
+        },
+                {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('automationAccountName'), '/', variables('MicrosoftTeams').name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "contentLink": {
+                    "uri": "[variables('MicrosoftTeams').url]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[parameters('jobGuid')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "runbook": {
+                    "name": "billingscript"
+                },
+                "schedule": {
+                    "name": "LoopUp Billing Script Schedule"
+                }
+            }
         },
         {
             "apiVersion": "2020-01-13-preview",
