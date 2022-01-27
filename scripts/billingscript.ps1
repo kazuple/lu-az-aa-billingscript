@@ -1,13 +1,18 @@
-#$service = Get-CsOnlineUser | Select-Object DisplayName,UserPrincipalName,SipAddress,HostingProvider,LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy
-#get-csonlineuser -identity adelev@M365x643811.onmicrosoft.com
 
-$url = "https://prod-166.westus.logic.azure.com:443/workflows/7c0497e062234ff2ae617fd21231e89b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1eveUH7pqDXn0lrY9dspfuMXBeTIwPgrMAynFPP-5Lo"
+#Get Automation Account Variables (LUCT TLD)
+$luServiceAccountUsername = Get-AutomationVariable -Name 'luServiceAccountUsername'
+$luServiceAccountPW = Get-AutomationVariable -Name 'luServiceAccountPW'
 
-$luctUser = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*'} | Select-Object TenantId,DisplayName,LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy
-#$luctUser = Get-CsOnlineUser -identity adelev@M365x643811.onmicrosoft.com | Select-Object DisplayName,LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy
+#LoopUp Endpoint URL
+$endpointUrl = "https://prod-166.westus.logic.azure.com:443/workflows/7c0497e062234ff2ae617fd21231e89b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1eveUH7pqDXn0lrY9dspfuMXBeTIwPgrMAynFPP-5Lo"
 
-#$luctApplication = Get-CsOnlineApplicationInstance | Select-Object PhoneNumber
+#Teams PowerShell
+$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $luServiceAccountUsername, $luServiceAccountPW
+Connect-MicrosoftTeams -Credential $credential
+
+
+$luctUser = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object TenantId,DisplayName,LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy
  
-$service = ConvertTo-Json $luctUser
+$output = ConvertTo-Json $luctUser
 
-Invoke-RestMethod -Method Post -Uri $url -Body $service -ContentType application/json
+Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType application/json
