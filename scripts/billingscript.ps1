@@ -1,3 +1,6 @@
+#Install Microsoft Teams PowerShell Module
+Install-Module -Name MicrosoftTeams 
+Import-Module MicrosoftTeams
 
 #Get Automation Account Variables (LUCT TLD)
 $luServiceAccountUsername = Get-AutomationVariable -Name 'luServiceAccountUsername'
