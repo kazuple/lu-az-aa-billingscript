@@ -104,7 +104,7 @@
             ],
             "properties": {
                 "runbook": {
-                    "name": "[variables('luScripts').runbooks.scheduleRunbook.Name]"
+                    "name": "billingscript"
                 },
                 "schedule": {
                     "name": "LoopUp Billing Script Schedule"
