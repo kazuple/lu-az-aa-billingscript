@@ -47,9 +47,19 @@
             "metadata": {
                 "description": "GUID for the schedule creation - create a unique before deploy"
             }
+        },
+        "baseTime": {
+        "type": "string",
+        "defaultValue": "[utcNow('u')]",
+        "metadata": {
+            "description": "Schedule will start one hour from this time."
         }
-    },
+    }
+},
     "variables": {
+        "scheduleStartTime": {
+            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
+        },
         "assets": {
             "aaVariables": {
                 "luServiceAccountUsername": {
@@ -76,10 +86,6 @@
         "MicrosoftTeams": {
                     "name": "MicrosoftTeams",
                     "url": "[uri(parameters('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
-        },
-        "scheduleTime": {
-                "type": "string",
-                "value": "[dateTimeAdd(utcNow('u'), 'PT1H', 'yyyy-MM-dd THH:mm:ss zzzz')]"
         }
     },
     "resources": [
@@ -185,7 +191,7 @@
             ],
             "properties": {
                 "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
-                "startTime": "[variables('scheduleTime').value]",
+                "startTime": "[variables('scheduleStartTime')]",
                 "expiryTime": "9999-12-31T23:59:00+00:00",
                 "interval": 1,
                 "frequency": "Month",
