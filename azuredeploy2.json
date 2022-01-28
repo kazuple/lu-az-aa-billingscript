@@ -11,7 +11,7 @@
             "defaultValue": "[utcNow('u')]",
             "metadata": {
                 "description": "Schedule will start one hour from this time."
-        }
+            }
         }
     },
     "variables": {
@@ -38,7 +38,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccounts_LU_AA_BillingScript_name'), '/cc860ca1-0cec-4cb9-a1da-4854e8ace15d')]",
+            "name": "[concat(parameters('automationAccounts_LU_AA_BillingScript_name'), '/43c69403-5808-4ac5-b5b5-8137d87e6e3c')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_LU_AA_BillingScript_name'))]"
             ],
