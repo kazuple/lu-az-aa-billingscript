@@ -28,6 +28,35 @@
                 "description": "Specify the region for your automation account"
             }
         },
+//        "_artifactsLocation": {
+//            "type": "string",
+//            "defaultValue": "[deployment().properties.templateLink.uri]",
+//            "metadata": {
+//                "description": "URI to artifacts location"
+//            }
+//        },
+        "modulesUri": {
+            "type": "string",
+            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
+            "metadata": {
+                "description": "Default PowerShell Gallery Modules URI"
+            }
+        }
+//        "jobGuid": {
+//            "type": "string",
+//           "metadata": {
+//              "description": "GUID for the schedule creation - create a unique before deploy"
+//            }
+//        },
+//        "baseTime": {
+//        "type": "string",
+//        "defaultValue": "[utcNow('u')]",
+//        "metadata": {
+//            "description": "Schedule will start one hour from this time."
+//        }
+//    }
+},
+    "variables": {
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "[deployment().properties.templateLink.uri]",
@@ -35,31 +64,9 @@
                 "description": "URI to artifacts location"
             }
         },
-        "modulesUri": {
-            "type": "string",
-            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
-            "metadata": {
-                "description": "Default PowerShell Gallery Modules URI"
-            }
-        },
-//        "jobGuid": {
-//            "type": "string",
-//           "metadata": {
-//              "description": "GUID for the schedule creation - create a unique before deploy"
-//            }
+//        "scheduleStartTime": {
+//            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
 //        },
-        "baseTime": {
-        "type": "string",
-        "defaultValue": "[utcNow('u')]",
-        "metadata": {
-            "description": "Schedule will start one hour from this time."
-        }
-    }
-},
-    "variables": {
-        "scheduleStartTime": {
-            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
-        },
         "assets": {
             "aaVariables": {
                 "luServiceAccountUsername": {
@@ -76,7 +83,7 @@
             "runbooks": [
                 {
                     "name": "billingscript",
-                    "url": "[uri(parameters('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
+                    "url": "[uri(variables('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
                     "version": "1.0.0.0",
                     "type": "PowerShell",
                     "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
@@ -130,23 +137,23 @@
                 }
             ]
         },         
-        {
-            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
-            "apiVersion": "2020-01-13-preview",
+//        {
+//            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
+//            "apiVersion": "2020-01-13-preview",
 //            "name": "[concat(parameters('automationAccountName'), '/', parameters('jobGuid'))]",
-            "name": "[concat(parameters('automationAccountName'), '/aa16bc60-55ea-4491-87ae-8b7177414078')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "runbook": {
-                    "name": "[variables('luScripts').runbooks.name]"
-                },
-                "schedule": {
-                    "name": "LoopUp Billing Script Schedule"
-                }
-            }
-        },
+//            "name": "[concat(parameters('automationAccountName'), '/aa16bc60-55ea-4491-87ae-8b7177414078')]",
+//            "dependsOn": [
+//                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+//            ],
+//            "properties": {
+//                "runbook": {
+//                    "name": "[variables('luScripts').runbooks.name]"
+//                },
+//                "schedule": {
+//                    "name": "LoopUp Billing Script Schedule"
+//                }
+//            }
+//        },
         {
             "type": "Microsoft.Automation/automationAccounts/modules",
             "apiVersion": "2020-01-13-preview",
@@ -182,27 +189,27 @@
                     "version": "[variables('luScripts').runbooks[copyIndex()].version]"
                 }
             }
-        },
-        {
-            "type": "Microsoft.Automation/automationAccounts/schedules",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/LoopUp Billing Script Schedule')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
-                "startTime": "[variables('scheduleStartTime')]",
-                "expiryTime": "9999-12-31T23:59:00+00:00",
-                "interval": 1,
-                "frequency": "Month",
-                "timeZone": "Europe/London",
-                "advancedSchedule": {
-                    "monthDays": [
-                        30
-                    ]
-                }
-            }
         }
+//        {
+//            "type": "Microsoft.Automation/automationAccounts/schedules",
+//            "apiVersion": "2020-01-13-preview",
+//            "name": "[concat(parameters('automationAccountName'), '/LoopUp Billing Script Schedule')]",
+//            "dependsOn": [
+//                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+//            ],
+//            "properties": {
+//                "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
+//                "startTime": "[variables('scheduleStartTime')]",
+//                "expiryTime": "9999-12-31T23:59:00+00:00",
+//                "interval": 1,
+//                "frequency": "Month",
+//                "timeZone": "Europe/London",
+//                "advancedSchedule": {
+//                    "monthDays": [
+//                        30
+//                    ]
+//                 }
+//            }
+//        }
     ]
 }
