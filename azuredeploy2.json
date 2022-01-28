@@ -36,22 +36,6 @@
             }
         },
         {
-            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccounts_LU_AA_BillingScript_name'), '/43c69403-5808-4ac5-b5b5-8137d87e6e3c')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_LU_AA_BillingScript_name'))]"
-            ],
-            "properties": {
-                "runbook": {
-                    "name": "billingscript"
-                },
-                "schedule": {
-                    "name": "LoopUp Billing Script Schedule"
-                }
-            }
-        },
-        {
             "type": "Microsoft.Automation/automationAccounts/runbooks",
             "apiVersion": "2019-06-01",
             "name": "[concat(parameters('automationAccounts_LU_AA_BillingScript_name'), '/billingscript')]",
@@ -64,6 +48,22 @@
                 "logVerbose": true,
                 "logProgress": false,
                 "logActivityTrace": 0
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('automationAccounts_LU_AA_BillingScript_name'), '/7487d555-42b6-4476-916f-e240748a5518')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_LU_AA_BillingScript_name'))]"
+            ],
+            "properties": {
+                "runbook": {
+                    "name": "billingscript"
+                },
+                "schedule": {
+                    "name": "LoopUp Billing Script Schedule"
+                }
             }
         },
         {
