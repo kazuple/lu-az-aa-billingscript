@@ -133,7 +133,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/cc860ca1-0cec-4cb9-a1da-4854e8ace15d')]",
+            "name": "[concat(parameters('automationAccountName'), '/', parameters('jobGuid'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
