@@ -42,12 +42,12 @@
                 "description": "Default PowerShell Gallery Modules URI"
             }
         },
-        "jobGuid": {
-            "type": "string",
-            "metadata": {
-                "description": "GUID for the schedule creation - create a unique before deploy"
-            }
-        },
+//        "jobGuid": {
+//            "type": "string",
+//           "metadata": {
+//              "description": "GUID for the schedule creation - create a unique before deploy"
+//            }
+//        },
         "baseTime": {
         "type": "string",
         "defaultValue": "[utcNow('u')]",
