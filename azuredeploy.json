@@ -44,7 +44,6 @@
         },
         "jobGuid": {
             "type": "string",
-            "defaultValue": "",
             "metadata": {
                 "description": "GUID for the schedule creation - create a unique before deploy"
             }
@@ -98,13 +97,13 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[parameters('jobGuid')]",
+            "name": "[concat(parameters('automationAccountName'), '/cc860ca1-0cec-4cb9-a1da-4854e8ace15d')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
             "properties": {
                 "runbook": {
-                    "name": "billingscript"
+                    "name": "[variables('luScripts').runbooks.scheduleRunbook.Name]"
                 },
                 "schedule": {
                     "name": "LoopUp Billing Script Schedule"
