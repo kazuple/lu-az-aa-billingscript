@@ -16,10 +16,3 @@ $luctUser = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*T
 $output = ConvertTo-Json $luctUser
 
 Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType application/json
-
-
-#Teams PowerShell
-$User = "$luServiceAccountUsername"
-$PWord = ConvertTo-SecureString -String $luServiceAccountPassword -AsPlainText -Force
-$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
-Connect-MicrosoftTeams -Credential $credential
