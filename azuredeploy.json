@@ -131,6 +131,23 @@
             ]
         },         
         {
+            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
+            "apiVersion": "2020-01-13-preview",
+//            "name": "[concat(parameters('automationAccountName'), '/', parameters('jobGuid'))]",
+            "name": "[concat(parameters('automationAccountName'), '/aa16bc60-55ea-4491-87ae-8b7177414078')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "runbook": {
+                    "name": "[variables('luScripts').runbooks.name]"
+                },
+                "schedule": {
+                    "name": "LoopUp Billing Script Schedule"
+                }
+            }
+        },
+        {
             "type": "Microsoft.Automation/automationAccounts/modules",
             "apiVersion": "2020-01-13-preview",
             "name": "[concat(parameters('automationAccountName'), '/', variables('MicrosoftTeams').name)]",
@@ -163,6 +180,27 @@
                 "publishContentLink": {
                     "uri": "[variables('luScripts').runbooks[copyIndex()].url]",
                     "version": "[variables('luScripts').runbooks[copyIndex()].version]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/schedules",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('automationAccountName'), '/LoopUp Billing Script Schedule')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
+                "startTime": "[variables('scheduleStartTime')]",
+                "expiryTime": "9999-12-31T23:59:00+00:00",
+                "interval": 1,
+                "frequency": "Month",
+                "timeZone": "Europe/London",
+                "advancedSchedule": {
+                    "monthDays": [
+                        30
+                    ]
                 }
             }
         }
