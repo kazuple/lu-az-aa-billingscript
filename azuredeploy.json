@@ -129,7 +129,7 @@
                     }
                 },
                     {
-                    "name": "billingscript",
+                    "name": "1f0976d6-9541-418f-93e1-7856db5cf25e",
                     "type": "Microsoft.Automation/automationAccounts/jobSchedules",
                     "apiVersion": "2021-04-01",
                     "dependsOn": [
