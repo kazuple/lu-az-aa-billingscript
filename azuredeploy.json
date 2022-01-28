@@ -44,7 +44,7 @@
         },
         "jobGuid": {
             "type": "string",
-            "defaultValue": "test",
+            "defaultValue": "",
             "metadata": {
                 "description": "GUID for the schedule creation - create a unique before deploy"
             }
