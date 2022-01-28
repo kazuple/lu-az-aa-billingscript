@@ -182,25 +182,13 @@
         {
             "type": "Microsoft.Automation/automationAccounts/variables",
             "apiVersion": "2020-01-13-preview",
-            "name": "[variables('assets').aaVariables.luServiceAccountUsername.name]",
+            "name": "[concat(parameters('automationAccountName'), '/luServiceAccountUsername')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
             "properties": {
                 "isEncrypted": false,
-                "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]"
-            }
-        },
-        {
-            "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[variables('assets').aaVariables.luServiceAccountPassword.name]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "isEncrypted": true,
-                "description": "[variables('assets').aaVariables.luServiceAccountPassword.description]"
+                "description": "LoopUp Service Account: Username"
             }
         }
     ]
