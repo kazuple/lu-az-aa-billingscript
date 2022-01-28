@@ -92,8 +92,34 @@
                     "keySource": "Microsoft.Automation",
                     "identity": {}
                 }
-            }
-        },           
+            },
+            "resources": [
+                {
+                    "name": "[variables('assets').aaVariables.luServiceAccountUsername.name]",
+                    "type": "variables",
+                    "apiVersion": "2020-01-13-preview",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+                    ],
+                    "properties": {
+                        "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]"
+                    }
+                },
+                {
+                    "name": "[variables('assets').aaVariables.luServiceAccountPassword.name]",
+                    "type": "variables",
+                    "apiVersion": "2020-01-13-preview",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+                    ],
+                    "properties": {
+                        "description": "[variables('assets').aaVariables.luServiceAccountPassword.description]",
+                        "value": "[concat('\"',subscription().subscriptionId,'\"')]",
+                        "isEncrypted": true
+                    }
+                }
+            ]
+        },         
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
@@ -165,30 +191,6 @@
                         30
                     ]
                 }
-            }
-        },
-        {
-            "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/luServiceAccountPassword')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "isEncrypted": true,
-                "description": "LoopUp Service Account: Password"
-            }
-        },
-        {
-            "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/luServiceAccountUsername')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "isEncrypted": false,
-                "description": "LoopUp Service Account: Username"
             }
         }
     ]
