@@ -181,7 +181,7 @@
             ],
             "properties": {
                 "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
-                "startTime": "2022-01-27T16:11:00+00:00",
+                "startTime": "[dateTimeAdd(utcNow('u'), 'PT1H', 'yyyy-MM-dd THH:mm:ss zzzz')]",
                 "expiryTime": "9999-12-31T23:59:00+00:00",
                 "interval": 1,
                 "frequency": "Month",
