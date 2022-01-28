@@ -5,9 +5,20 @@
         "automationAccounts_LU_AA_BillingScript_name": {
             "defaultValue": "LU-AA-BillingScript",
             "type": "String"
+        },
+        "baseTime": {
+            "type": "string",
+            "defaultValue": "[utcNow('u')]",
+            "metadata": {
+                "description": "Schedule will start one hour from this time."
+        }
         }
     },
-    "variables": {},
+    "variables": {
+        "scheduleStartTime": {
+            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
+        }
+    },
     "resources": [
         {
             "type": "Microsoft.Automation/automationAccounts",
@@ -64,7 +75,7 @@
             ],
             "properties": {
                 "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
-                "startTime": "2022-01-27T16:11:00+00:00",
+                "startTime": "[variables('scheduleStartTime')]",
                 "expiryTime": "9999-12-31T23:59:00+00:00",
                 "interval": 1,
                 "frequency": "Month",
