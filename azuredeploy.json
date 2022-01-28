@@ -127,25 +127,25 @@
                         "value": "[concat('\"',subscription().subscriptionId,'\"')]",
                         "isEncrypted": true
                     }
+                },
+                    {
+                    "name": "[concat(parameters('automationAccountName'), '/', parameters('jobGuid'))]",
+                    "type": "Microsoft.Automation/automationAccounts/jobSchedules",
+                    "apiVersion": "2021-04-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+                    ],
+                    "properties": {
+                        "runbook": {
+                            "name": "[variables('luScripts').runbooks.name]"
+                        },
+                        "schedule": {
+                            "name": "LoopUp Billing Script Schedule"
+                        }
+                    }
                 }
             ]
         },         
-        {
-            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
-            "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/', parameters('jobGuid'))]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "properties": {
-                "runbook": {
-                    "name": "[variables('luScripts').runbooks.name]"
-                },
-                "schedule": {
-                    "name": "LoopUp Billing Script Schedule"
-                }
-            }
-        },
         {
             "type": "Microsoft.Automation/automationAccounts/modules",
             "apiVersion": "2020-01-13-preview",
