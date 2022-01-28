@@ -129,7 +129,7 @@
                     }
                 },
                     {
-                    "name": "[concat(parameters('automationAccountName'), '/', parameters('jobGuid'))]",
+                    "name": "billingscript",
                     "type": "Microsoft.Automation/automationAccounts/jobSchedules",
                     "apiVersion": "2021-04-01",
                     "dependsOn": [
@@ -140,7 +140,7 @@
                             "name": "[variables('luScripts').runbooks.name]"
                         },
                         "schedule": {
-                            "name": "LoopUp Billing Script Schedule"
+                            "name": "LoopUpBillingScriptSchedule"
                         }
                     }
                 }
