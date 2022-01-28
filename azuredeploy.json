@@ -76,7 +76,11 @@
         "MicrosoftTeams": {
                     "name": "MicrosoftTeams",
                     "url": "[uri(parameters('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
-                }
+        },
+        "scheduleTime": {
+                "type": "string",
+                "value": "[dateTimeAdd(utcNow('u'), 'PT1H', 'yyyy-MM-dd THH:mm:ss zzzz')]"
+        }
     },
     "resources": [
         {
@@ -181,7 +185,7 @@
             ],
             "properties": {
                 "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
-                "startTime": "[dateTimeAdd(utcNow('u'), 'PT1H', 'yyyy-MM-dd THH:mm:ss zzzz')]",
+                "startTime": "[variables('scheduleTime').value]",
                 "expiryTime": "9999-12-31T23:59:00+00:00",
                 "interval": 1,
                 "frequency": "Month",
