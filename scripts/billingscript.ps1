@@ -11,8 +11,9 @@ $PWord = ConvertTo-SecureString -String $luServiceAccountPassword -AsPlainText -
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
 Connect-MicrosoftTeams -Credential $credential
 
+$tenantId = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
 $luctUser = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object TenantId,DisplayName,LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy
  
-$output = ConvertTo-Json $luctUser
+$output = ConvertTo-Json $luctUser, $tenantId
 
 Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType application/json

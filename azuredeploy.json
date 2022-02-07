@@ -47,7 +47,7 @@
 //           "metadata": {
 //              "description": "GUID for the schedule creation - create a unique before deploy"
 //            }
-//        },
+//        }
 //        "baseTime": {
 //        "type": "string",
 //        "defaultValue": "[utcNow('u')]",
@@ -185,7 +185,7 @@
         }
 //        {
 //            "type": "Microsoft.Automation/automationAccounts/schedules",
-//            "apiVersion": "2020-01-13-preview",
+//           "apiVersion": "2020-01-13-preview",
 //            "name": "[concat(parameters('automationAccountName'), '/LoopUp Billing Script Schedule')]",
 //            "dependsOn": [
 //                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
