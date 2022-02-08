@@ -18,12 +18,12 @@ Write-Output "1/4 - Connected to Teams Tenant via PowerShell"
 
 #First/Last Day of Month
 $currentDate = Get-Date -Format "dd/MM/yyyy"
-$firstDayOfMonth = Get-Date $CURRENTDATE -Day 1
-$lastDayOfMonth = Get-Date $FIRSTDAYOFMONTH.AddMonths(1).AddSeconds(-1)
+$firstDayOfMonth = Get-Date $currentDate -Day 1
+$lastDayOfMonth = Get-Date $firstDayOfMonth.AddMonths(1).AddSeconds(-1)
 
 #Teams data collection
 $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
-$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}
+$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}
 Write-Output "2/4 - Collected Billing Data"
 
 #Convert data to Json
