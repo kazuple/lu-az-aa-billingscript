@@ -70,6 +70,13 @@
                 }
             }
         },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "[deployment().properties.templateLink.uri]",
+            "metadata": {
+                "description": "URI to artifacts location"
+            }
+        },
         "luScripts": {
             "runbooks": [
                 {
@@ -82,21 +89,14 @@
             ]    
         },
         "MicrosoftTeams": {
-                    "name": "MicrosoftTeams",
-                    "url": "[uri(variables('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
+            "name": "MicrosoftTeams",
+            "url": "[uri(variables('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
         },
         "modulesUri": {
             "type": "string",
             "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
             "metadata": {
                 "description": "Default PowerShell Gallery Modules URI"
-            }
-        },
-        "_artifactsLocation": {
-            "type": "string",
-            "defaultValue": "[deployment().properties.templateLink.uri]",
-            "metadata": {
-                "description": "URI to artifacts location"
             }
         }
     },
