@@ -32,14 +32,14 @@
             "type": "string",
             "defaultValue": "[deployment().properties.templateLink.uri]",
             "metadata": {
-                "description": "URI to artifacts location"
+                "description": "#DO NOT CHANGE# URI to artifacts location"
             }
         },
         "modulesUri": {
             "type": "string",
             "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
             "metadata": {
-                "description": "Default PowerShell Gallery Modules URI"
+                "description": "#DO NOT CHANGE# Default PowerShell Gallery Modules URI"
             }
         },
         "LoopUpServiceUsername": {
@@ -72,18 +72,18 @@
 //        "scheduleStartTime": {
 //            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
 //        },
-        "assets": {
-            "aaVariables": {
-                "luServiceAccountUsername": {
-                    "name": "luServiceAccountUsername",
-                    "description": "LoopUp Service Account: Username"
-                },
-                "luServiceAccountPassword": {
-                    "name": "luServiceAccountPassword",
-                    "description": "LoopUp Service Account: Password"
-                }
-            }
-        },
+//        "assets": {
+//            "aaVariables": {
+//                "luServiceAccountUsername": {
+//                    "name": "luServiceAccountUsername",
+//                    "description": "LoopUp Service Account: Username"
+//                },
+//                "luServiceAccountPassword": {
+//                    "name": "luServiceAccountPassword",
+//                    "description": "LoopUp Service Account: Password"
+//                }
+//            }
+//        },
         "luScripts": {
             "runbooks": [
                 {
@@ -114,33 +114,33 @@
                     "keySource": "Microsoft.Automation",
                     "identity": {}
                 }
-            },
-            "resources": [
-                {
-                    "name": "[variables('assets').aaVariables.luServiceAccountUsername.name]",
-                    "type": "variables",
-                    "apiVersion": "2020-01-13-preview",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
-                    ],
-                    "properties": {
-                        "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]"
-                    }
-                },
-                {
-                    "name": "[variables('assets').aaVariables.luServiceAccountPassword.name]",
-                    "type": "variables",
-                    "apiVersion": "2020-01-13-preview",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
-                    ],
-                    "properties": {
-                        "description": "[variables('assets').aaVariables.luServiceAccountPassword.description]",
-                        "value": "[concat('\"',subscription().subscriptionId,'\"')]",
-                        "isEncrypted": true
-                    }
-                }
-            ]
+            }
+//            "resources": [
+//                {
+//                    "name": "[variables('assets').aaVariables.luServiceAccountUsername.name]",
+//                    "type": "variables",
+//                    "apiVersion": "2020-01-13-preview",
+//                    "dependsOn": [
+//                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+//                    ],
+//                    "properties": {
+//                        "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]"
+//                    }
+//                },
+//                {
+//                    "name": "[variables('assets').aaVariables.luServiceAccountPassword.name]",
+//                    "type": "variables",
+//                    "apiVersion": "2020-01-13-preview",
+//                    "dependsOn": [
+//                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+//                    ],
+//                    "properties": {
+//                        "description": "[variables('assets').aaVariables.luServiceAccountPassword.description]",
+//                        "value": "[concat('\"',subscription().subscriptionId,'\"')]",
+//                        "isEncrypted": true
+//                    }
+//                }
+//            ]
         },
         {
             "type": "Microsoft.Automation/automationAccounts/credentials",
