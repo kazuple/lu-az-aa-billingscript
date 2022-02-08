@@ -70,20 +70,6 @@
 //                }
 //            }
 //        },
-        "_artifactsLocation": {
-            "type": "string",
-            "defaultValue": "[deployment().properties.templateLink.uri]",
-            "metadata": {
-                "description": "#DO NOT CHANGE# URI to artifacts location"
-            }
-        },
-        "modulesUri": {
-            "type": "string",
-            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
-            "metadata": {
-                "description": "#DO NOT CHANGE# Default PowerShell Gallery Modules URI"
-            }
-        },
         "luScripts": {
             "runbooks": [
                 {
