@@ -17,7 +17,7 @@ Connect-MicrosoftTeams -Credential $credentials
 Write-Output "1/4 - Connected to Teams Tenant via PowerShell"
 
 #First/Last Day of Month
-$currentDate = Get-Date -Format "dd/MM/yyyy"
+$currentDate = Get-Date -DisplayHint Date -Format "dd/MM/yyyy"
 $firstDayOfMonth = Get-Date $currentDate -Day 1
 $lastDayOfMonth = Get-Date $firstDayOfMonth.AddMonths(1).AddSeconds(-1)
 
