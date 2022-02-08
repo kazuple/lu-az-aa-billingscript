@@ -21,9 +21,20 @@ $currentDate = Get-Date -Format "dd/MM/yyyy"
 $firstDayOfMonth = Get-Date $currentDate -Day 1
 $lastDayOfMonth = Get-Date $firstDayOfMonth.AddMonths(1).AddSeconds(-1)
 
-#Teams data collection
+#Days in the month
+$first = get-date -day 1 -Hour 0 -Minute 0 -Second 0
+$last = get-date $first.AddMonths(1).AddSeconds(-1)
+
+$daysInMonth = ($last-$first).Days + 1
+
+#Pro Rata
+$proRata = "1"
+
+#Tenant OnMicrosoft Domain
 $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
-$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}
+
+#Teams data collection
+$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 Write-Output "2/4 - Collected Billing Data"
 
 #Convert data to Json
