@@ -145,7 +145,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/credentials",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/', 'LoopUp Service Account Credentials')]",
+            "name": "[concat(parameters('automationAccountName'), '/', 'LoopUpServiceAccountCredentials')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
