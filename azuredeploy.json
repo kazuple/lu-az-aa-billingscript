@@ -39,6 +39,13 @@
             "metadata": {
                 "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
             }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "[deployment().properties.templateLink.uri]",
+            "metadata": {
+                "description": "URI to artifacts location"
+            }
         }
 //        "jobGuid": {
 //            "type": "string",
@@ -70,18 +77,11 @@
                 }
             }
         },
-        "_artifactsLocation": {
-            "type": "string",
-            "defaultValue": "[deployment().properties.templateLink.uri]",
-            "metadata": {
-                "description": "URI to artifacts location"
-            }
-        },
         "luScripts": {
             "runbooks": [
                 {
                     "name": "billingscript",
-                    "url": "[uri(variables('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
+                    "url": "[uri(parameters('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
                     "version": "1.0.0.0",
                     "type": "PowerShell",
                     "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
