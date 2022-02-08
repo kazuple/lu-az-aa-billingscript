@@ -16,9 +16,11 @@ $CURRENTDATE=GET-DATE -Format "MM/dd/yyyy"
 $FIRSTDAYOFMONTH=GET-DATE $CURRENTDATE -Day 1
 $LASTDAYOFMONTH=GET-DATE $FIRSTDAYOFMONTH.AddMonths(1).AddSeconds(-1)
 
+#Teams data collection
 $tenantId = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
 $luctUser = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object TenantId,DisplayName,LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantId}}, @{Name='StartDate'; Expression = {$FIRSTDAYOFMONTH}}, @{Name='StartDate'; Expression = {$LASTDAYOFMONTH}}
 
+#Convert data to Json
 $output = ConvertTo-Json $luctUser
 
 Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType application/json
