@@ -27,6 +27,18 @@
             "metadata": {
                 "description": "Specify the region for your automation account"
             }
+        }
+        "LoopUpServiceUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter your LoopUp Service account username, ex: loopup.service@contoso.com. This will be used to query Teams to export required billing information."
+            }
+        },
+        "LoopUpServicePassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
+            }
         },
         "_artifactsLocation": {
             "type": "string",
@@ -40,18 +52,6 @@
             "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
             "metadata": {
                 "description": "#DO NOT CHANGE# Default PowerShell Gallery Modules URI"
-            }
-        },
-        "LoopUpServiceUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "Enter your LoopUp Service account username, ex: loopup.service@contoso.com. This will be used to query Teams to export required billing information."
-            }
-        },
-        "LoopUpServicePassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
             }
         }
 //        "jobGuid": {
