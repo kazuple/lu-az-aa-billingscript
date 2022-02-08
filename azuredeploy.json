@@ -28,13 +28,6 @@
                 "description": "Specify the region for your automation account"
             }
         },
-        "_artifactsLocation": {
-            "type": "string",
-            "defaultValue": "[deployment().properties.templateLink.uri]",
-            "metadata": {
-                "description": "URI to artifacts location"
-            }
-        },
         "LoopUpServiceUsername": {
             "type": "string",
             "metadata": {
@@ -81,7 +74,7 @@
             "runbooks": [
                 {
                     "name": "billingscript",
-                    "url": "[uri(parameters('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
+                    "url": "[uri(variables('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
                     "version": "1.0.0.0",
                     "type": "PowerShell",
                     "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
@@ -97,6 +90,13 @@
             "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
             "metadata": {
                 "description": "Default PowerShell Gallery Modules URI"
+            }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "[deployment().properties.templateLink.uri]",
+            "metadata": {
+                "description": "URI to artifacts location"
             }
         }
     },
