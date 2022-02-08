@@ -35,23 +35,16 @@
                 "description": "URI to artifacts location"
             }
         },
-        "modulesUri": {
-            "type": "string",
-            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
-            "metadata": {
-                "description": "Default PowerShell Gallery Modules URI"
-            }
-        },
-        "LUServiceUser": {
+        "LoopUpServiceUsername": {
             "type": "string",
             "metadata": {
-                "description": "Enter your service admin user, ex: serviceaccount@microsoft.com.  Must be owner on the subscription you're deploying to during template deployment."
+                "description": "Enter your LoopUp Service account username, ex: loopup.service@contoso.com.  This will be used to query Teams to export required billing information."
             }
         },
-        "LUServicePwd": {
+        "LoopUpServicePassword": {
             "type": "securestring",
             "metadata": {
-                "description": "Enter the password for the service admin user. The pwd is encrypted during runtime and in the Automation assets"
+                "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
             }
         }
 //        "jobGuid": {
@@ -97,7 +90,14 @@
         },
         "MicrosoftTeams": {
                     "name": "MicrosoftTeams",
-                    "url": "[uri(parameters('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
+                    "url": "[uri(variables('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
+        },
+        "modulesUri": {
+            "type": "string",
+            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
+            "metadata": {
+                "description": "Default PowerShell Gallery Modules URI"
+            }
         }
     },
     "resources": [
@@ -151,8 +151,8 @@
             ],
             "properties": {
                 "description": "LoopUp Service Account Credentials",
-                "password": "[parameters('LUServiceUser')]",
-                "userName": "[parameters('LUServicePwd')]"
+                "password": "[parameters('LoopUpServicePassword')]",
+                "userName": "[parameters('LoopUpServiceUsername')]"
             }
         },  
 //        {
