@@ -46,6 +46,13 @@
             "metadata": {
                 "description": "URI to artifacts location"
             }
+        },
+        "modulesUri": {
+            "type": "string",
+            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
+            "metadata": {
+                "description": "Default PowerShell Gallery Modules URI"
+            }
         }
 //        "jobGuid": {
 //            "type": "string",
@@ -90,14 +97,7 @@
         },
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
-            "url": "[uri(variables('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
-        },
-        "modulesUri": {
-            "type": "string",
-            "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
-            "metadata": {
-                "description": "Default PowerShell Gallery Modules URI"
-            }
+            "url": "[uri(parameters('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
         }
     },
     "resources": [
