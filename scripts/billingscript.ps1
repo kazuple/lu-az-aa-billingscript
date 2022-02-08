@@ -23,11 +23,11 @@ $lastDayOfMonth = Get-Date $FIRSTDAYOFMONTH.AddMonths(1).AddSeconds(-1)
 
 #Teams data collection
 $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
-$luctUser = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}
+$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True')} | Select-Object LineURI,OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}
 Write-Output "2/4 - Collected Billing Data"
 
 #Convert data to Json
-$output = ConvertTo-Json $luctUser
+$output = ConvertTo-Json $billingData
 
 #Send data to endpoint url
 Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType application/json
