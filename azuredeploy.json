@@ -28,18 +28,6 @@
                 "description": "Specify the region for your automation account"
             }
         },
-        "LoopUpServiceUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "Enter your LoopUp Service account username, ex: loopup.service@contoso.com.  This will be used to query Teams to export required billing information."
-            }
-        },
-        "LoopUpServicePassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
-            }
-        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "[deployment().properties.templateLink.uri]",
@@ -52,6 +40,18 @@
             "defaultValue": "https://devopsgallerystorage.blob.core.windows.net/packages/",
             "metadata": {
                 "description": "Default PowerShell Gallery Modules URI"
+            }
+        },
+        "LoopUpServiceUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter your LoopUp Service account username, ex: loopup.service@contoso.com. This will be used to query Teams to export required billing information."
+            }
+        },
+        "LoopUpServicePassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
             }
         }
 //        "jobGuid": {
@@ -96,8 +96,8 @@
             ]    
         },
         "MicrosoftTeams": {
-            "name": "MicrosoftTeams",
-            "url": "[uri(parameters('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
+                    "name": "MicrosoftTeams",
+                    "url": "[uri(parameters('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
         }
     },
     "resources": [
