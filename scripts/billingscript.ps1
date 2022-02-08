@@ -12,7 +12,7 @@ $endpointUrl = "https://prod-166.westus.logic.azure.com:443/workflows/7c0497e062
 #Connect-MicrosoftTeams -Credential $credential
 
 #Teams PowerShell Authentication
-$credentials = Get-AutomationPSCredential -Name 'LoopUp Service Account Credentials'
+$credentials = Get-AutomationPSCredential -Name 'LoopUpServiceAccountCredentials'
 Connect-MicrosoftTeams -Credential $credentials 
 Write-Output "1/4 - Connected to Teams Tenant via PowerShell"
 
