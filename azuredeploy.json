@@ -41,6 +41,18 @@
             "metadata": {
                 "description": "Default PowerShell Gallery Modules URI"
             }
+        },
+        "LUServiceUser": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter your service admin user, ex: serviceaccount@microsoft.com.  Must be owner on the subscription you're deploying to during template deployment."
+            }
+        },
+        "LUServicePwd": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Enter the password for the service admin user. The pwd is encrypted during runtime and in the Automation assets"
+            }
         }
 //        "jobGuid": {
 //            "type": "string",
@@ -129,7 +141,20 @@
                     }
                 }
             ]
-        },         
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/credentials",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('automationAccountName'), '/', 'LoopUp Service Account Credentials')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "description": "LoopUp Service Account Credentials",
+                "password": "[parameters('LUServiceUser')]",
+                "userName": "[parameters('LUServicePwd')]"
+            }
+        },  
 //        {
 //            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
 //            "apiVersion": "2020-01-13-preview",
