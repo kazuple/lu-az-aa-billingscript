@@ -88,7 +88,7 @@
             "runbooks": [
                 {
                     "name": "billingscript",
-                    "url": "[uri(variables('_artifactsLocation'), concat('scripts/billingscript.ps1'))]",
+                    "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/billingscript.ps1",
                     "version": "1.0.0.0",
                     "type": "PowerShell",
                     "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
@@ -97,7 +97,7 @@
         },
         "MicrosoftTeams": {
                     "name": "MicrosoftTeams",
-                    "url": "[uri(variables('modulesUri'),'microsoftteams.3.1.0.nupkg')]"
+                    "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
         }
     },
     "resources": [
