@@ -209,10 +209,10 @@
             ],
             "properties": {
                 "runbook": {
-                    "name": "[variables('luScripts').runbooks.name]"
+                    "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks[copyIndex()].Name)]"
                 },
                 "schedule": {
-                    "name": "LoopUpBillingScriptSchedule"
+                    "name": "[concat(parameters('automationAccountName'), '/', 'LoopUpBillingScriptSchedule')]"
                 }
             }
         }
