@@ -56,6 +56,9 @@
 //    }
 },
     "variables": {
+        "schedulerJobGuid": {
+            "guid": "[newGuid()]"
+        },
 //        "scheduleStartTime": {
 //            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
 //        },
@@ -83,8 +86,8 @@
             ]    
         },
         "MicrosoftTeams": {
-                    "name": "MicrosoftTeams",
-                    "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
+            "name": "MicrosoftTeams",
+            "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
         }
     },
     "resources": [
@@ -203,7 +206,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
+            "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks.name)]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
