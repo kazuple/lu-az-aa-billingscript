@@ -6,13 +6,13 @@
             "value": "LU-AA-BillingScript"
         },
         "automationRegion": {
-            "value": "test" // TODO: Fill in parameter value
+            "value": "test"
         },
         "LoopUpServiceUsername": {
-            "value": "test" // TODO: Fill in parameter value
+            "value": "test"
         },
         "LoopUpServicePassword": {
-            "value": "test" // TODO: Fill in parameter value
+            "value": "test"
         }
     }
 }
