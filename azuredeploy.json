@@ -56,9 +56,9 @@
 //    }
 },
     "variables": {
-        "schedulerJobGuid": {
-            "guid": "[newGuid()]"
-        },
+//        "schedulerJobGuid": {
+//            "guid": "[newGuid()]"
+//        },
 //        "scheduleStartTime": {
 //            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
 //        },
@@ -206,7 +206,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/', variables('schedulerJobGuid').guid)]",
+            "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
