@@ -205,8 +205,7 @@
             "apiVersion": "2020-01-13-preview",
             "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]",
-                "[resourceId('Microsoft.Automation/automationAccounts/schedules', parameters('automationAccountName'))]"
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
             "properties": {
                 "runbook": {
