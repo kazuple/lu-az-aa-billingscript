@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "automationAccountName": {
+            "value": "LU-AA-BillingScript"
+        },
+        "automationRegion": {
+            "value": "test" // TODO: Fill in parameter value
+        },
+        "LoopUpServiceUsername": {
+            "value": "test" // TODO: Fill in parameter value
+        },
+        "LoopUpServicePassword": {
+            "value": "test" // TODO: Fill in parameter value
+        }
+    }
+}
