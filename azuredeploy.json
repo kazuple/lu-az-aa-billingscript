@@ -206,7 +206,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks.name)]",
+            "name": "[concat(parameters('automationAccountName'), '/', variables('schedulerJobGuid').guid)]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
