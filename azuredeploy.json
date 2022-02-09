@@ -39,7 +39,7 @@
             "metadata": {
                 "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
             }
-        },
+        }
 //        "schedulerJobGuid": {
 //            "type": "string",
 //            "defaultValue": "b7df56b6-0852-432d-b7ea-1a225a10113e",
