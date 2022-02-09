@@ -181,7 +181,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/schedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/LoopUpBillingScriptSchedule')]",
+            "name": "[concat(parameters('automationAccountName'), '/', 'LoopUpBillingScriptSchedule')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
