@@ -39,14 +39,14 @@
             "metadata": {
                 "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
             }
+        },
+        "schedulerJobGuid": {
+            "type": "string",
+            "defaultValue": "b7df56b6-0852-432d-b7ea-1a225a10113e",
+            "metadata": {
+              "description": "GUID for the schedule creation - create a unique before deploy"
+            }
         }
-//        "schedulerJobGuid": {
-//            "type": "string",
-//            "defaultValue": "b7df56b6-0852-432d-b7ea-1a225a10113e",
-//            "metadata": {
-//              "description": "GUID for the schedule creation - create a unique before deploy"
-//            }
-//        }
 //        "baseTime": {
 //        "type": "string",
 //        "defaultValue": "[utcNow('u')]",
@@ -203,7 +203,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'), '/3e87b541-65be-45a4-941e-7f7c66aa64e4')]",
+            "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
