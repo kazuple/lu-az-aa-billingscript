@@ -107,7 +107,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2020-01-13-preview",
-            "name": "[concat(parameters('automationAccountName'))]",
+            "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
             ],
