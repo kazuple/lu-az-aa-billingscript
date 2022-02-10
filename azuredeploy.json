@@ -159,7 +159,7 @@
                     "apiVersion": "2019-06-01",
                     "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
                     "dependsOn": [
-                        "[parameters('automationAccountName')]"
+                        "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
                     ],
                     "properties": {
                         "schedule": {
