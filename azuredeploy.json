@@ -157,22 +157,21 @@
                 {
                     "type": "Microsoft.Automation/automationAccounts/jobSchedules",
                     "apiVersion": "2015-10-31",
-                    "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
+                    "name": "[parameters('schedulerJobGuid')]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
                     ],
                     "properties": {
-                        "runbook": {
-                            "name": "[variables('luScripts').runbooks.name]"
-                        },
                         "schedule": {
                             "name": "LoopUpBillingScriptSchedule"
+                        },
+                        "runbook": {
+                            "name": "[variables('luScripts').runbooks.name]"
                         }
                     }
                 }
             ]
         },
-
         {
             "type": "Microsoft.Automation/automationAccounts/runbooks",
             "apiVersion": "2019-06-01",
