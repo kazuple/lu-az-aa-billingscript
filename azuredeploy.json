@@ -109,7 +109,7 @@
                 {
                     "type": "Microsoft.Automation/automationAccounts/runbooks",
                     "apiVersion": "2019-06-01",
-                    "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks.Name)]",
+                    "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks.name)]",
                     "location": "[parameters('automationRegion')]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
