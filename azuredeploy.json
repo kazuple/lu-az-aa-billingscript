@@ -157,9 +157,9 @@
                 {
                     "type": "Microsoft.Automation/automationAccounts/jobSchedules",
                     "apiVersion": "2019-06-01",
-                    "name": "[concat('LU-AA-BillingScript', '/', parameters('schedulerJobGuid'))]",
+                    "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+                        "[parameters('automationAccountName')]"
                     ],
                     "properties": {
                         "schedule": {
