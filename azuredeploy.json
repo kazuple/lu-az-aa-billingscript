@@ -107,6 +107,29 @@
             },
             "resources": [
                 {
+                    "type": "Microsoft.Automation/automationAccounts/runbooks",
+                    "apiVersion": "2019-06-01",
+                    "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks.Name)]",
+                    "location": "[parameters('automationRegion')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+                    ],
+//                    "copy": {
+//                        "name": "runbooksLoop",
+//                        "count": "[length(variables('luScripts').runbooks)]"
+//                    },
+                    "properties": {
+                        "description": "[variables('luScripts').runbooks.description]",
+                        "runbookType": "[variables('luScripts').runbooks.type]",
+                        "logVerbose": true,
+                        "logProgress": false,
+                        "publishContentLink": {
+                            "uri": "[variables('luScripts').runbooks.url]",
+                            "version": "[variables('luScripts').runbooks.version]"
+                        }
+                    }
+                },
+                {
                     "type": "Microsoft.Automation/automationAccounts/credentials",
                     "apiVersion": "2020-01-13-preview",
                     "name": "[concat(parameters('automationAccountName'), '/', 'LoopUpServiceAccountCredentials')]",
@@ -171,29 +194,6 @@
                     }
                 }
             ]
-        },
-        {
-            "type": "Microsoft.Automation/automationAccounts/runbooks",
-            "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks[copyIndex()].Name)]",
-            "location": "[parameters('automationRegion')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
-            ],
-            "copy": {
-                "name": "runbooksLoop",
-                "count": "[length(variables('luScripts').runbooks)]"
-            },
-            "properties": {
-                "description": "[variables('luScripts').runbooks[copyIndex()].description]",
-                "runbookType": "[variables('luScripts').runbooks[copyIndex()].type]",
-                "logVerbose": true,
-                "logProgress": false,
-                "publishContentLink": {
-                    "uri": "[variables('luScripts').runbooks[copyIndex()].url]",
-                    "version": "[variables('luScripts').runbooks[copyIndex()].version]"
-                }
-            }
         }
     ]
 }
