@@ -9,20 +9,6 @@
                 "description": "Specify the name of your Automation Account"
             }
         },
-        "runbookName": {
-            "defaultValue": "BillingScript-Runbook",
-            "type": "String",
-            "metadata": {
-                "description": "Specify the runbook name of your Automation Account"
-            }
-        },
-        "scheduleName": {
-            "defaultValue": "BillingScript-Schedule",
-            "type": "String",
-            "metadata": {
-                "description": "Specify the runbook schedule name of your Automation Account"
-            }
-        },
         "automationRegion": {
             "type": "string",
             "allowedValues": [
@@ -89,9 +75,16 @@
 //            }
 //        },
         "luScripts": {
-            "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Azure.ps1",
-            "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
-            },
+            "runbooks": [
+                {
+                    "name": "billingscript",
+                    "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Azure.ps1",
+                    "version": "1.0.0.0",
+                    "type": "PowerShell",
+                    "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
+                }
+            ]    
+        },
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
             "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
@@ -111,92 +104,120 @@
                     "keySource": "Microsoft.Automation",
                     "identity": {}
                 }
-            },
-            "resources": [
-                {
-                    "type": "Microsoft.Automation/automationAccounts/runbooks",
-                    "apiVersion": "2019-06-01",
-                    "name": "[concat(parameters('automationAccountName'), '/', parameters('runbookName'))]",
-                    "location": "[parameters('automationRegion')]",
-                    "dependsOn": [
-                        "[parameters('automationAccountName')]"
-                    ],
-                    "properties": {
-                        "description": "[variables('luScripts').description]",
-                        "runbookType": "PowerShell",
-                        "logVerbose": true,
-                        "logProgress": false,
-                        "publishContentLink": {
-                            "uri": "[variables('luScripts').url]",
-                            "version": "1.0.0.0"
-                        }
-                    }
-                },
-                {
-                    "type": "Microsoft.Automation/automationAccounts/credentials",
-                    "apiVersion": "2020-01-13-preview",
-                    "name": "[concat(parameters('automationAccountName'), '/', 'Credentials')]",
-                    "dependsOn": [
-                        "[parameters('automationAccountName')]"
-                    ],
-                    "properties": {
-                        "description": "LoopUp Service Account Credentials",
-                        "password": "[parameters('LoopUpServicePassword')]",
-                        "userName": "[parameters('LoopUpServiceUsername')]"
-                    }
-                },  
-                {
-                    "type": "Microsoft.Automation/automationAccounts/modules",
-                    "apiVersion": "2020-01-13-preview",
-                    "name": "[concat(parameters('automationAccountName'), '/', 'MicrosoftTeamsPowerShellModule')]",
-                    "dependsOn": [
-                        "[parameters('automationAccountName')]"
-                    ],
-                    "properties": {
-                        "contentLink": {
-                            "uri": "[variables('MicrosoftTeams').url]"
-                        }
-                    }
-                }
-            ]
+            }
+//            "resources": [
+//                {
+//                    "name": "[variables('assets').aaVariables.luServiceAccountUsername.name]",
+//                    "type": "variables",
+//                    "apiVersion": "2020-01-13-preview",
+//                    "dependsOn": [
+//                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+//                    ],
+//                    "properties": {
+//                        "description": "[variables('assets').aaVariables.luServiceAccountUsername.description]"
+//                    }
+//                },
+//                {
+//                    "name": "[variables('assets').aaVariables.luServiceAccountPassword.name]",
+//                    "type": "variables",
+//                    "apiVersion": "2020-01-13-preview",
+//                    "dependsOn": [
+//                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+//                    ],
+//                    "properties": {
+//                        "description": "[variables('assets').aaVariables.luServiceAccountPassword.description]",
+//                        "value": "[concat('\"',subscription().subscriptionId,'\"')]",
+//                        "isEncrypted": true
+//                    }
+//                }
+//            ]
         },
-                        {
-                    "type": "Microsoft.Automation/automationAccounts/schedules",
-                    "apiVersion": "2020-01-13-preview",
-                    "name": "[concat(parameters('automationAccountName'), '/', parameters('scheduleName'))]",
-                    "dependsOn": [
-                        "[parameters('automationAccountName')]"
-                    ],
-                    "properties": {
-                        "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
-        //                "startTime": "[variables('scheduleStartTime')]",
-                        "startTime": "",
-                        "expiryTime": "9999-12-31T23:59:00+00:00",
-                        "interval": 1,
-                        "frequency": "Month",
-                        "timeZone": "Europe/London",
-                        "advancedSchedule": {
-                            "monthDays": [
-                                30
-                            ]
-                        }
-                    }
-                },
-                {
-                    "type": "Microsoft.Automation/automationAccounts/jobSchedules",
-                    "apiVersion": "2015-10-31",
-                    "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
-                    "dependsOn": [
-                        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/schedules/', parameters('scheduleName'))]"
-                    ],
-                    "properties": {
-                        "runbook": {
-                            "name": "[parameters('runbookName')]"
-                        },
-                        "schedule": {
-                            "name": "[parameters('scheduleName')]"
-                        }
-                    }
+        {
+            "type": "Microsoft.Automation/automationAccounts/credentials",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('automationAccountName'), '/', 'LoopUpServiceAccountCredentials')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "description": "LoopUp Service Account Credentials",
+                "password": "[parameters('LoopUpServicePassword')]",
+                "userName": "[parameters('LoopUpServiceUsername')]"
+            }
+        },  
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('automationAccountName'), '/', variables('MicrosoftTeams').name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "contentLink": {
+                    "uri": "[variables('MicrosoftTeams').url]"
                 }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runbooks",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('automationAccountName'), '/', variables('luScripts').runbooks[copyIndex()].Name)]",
+            "location": "[parameters('automationRegion')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "copy": {
+                "name": "runbooksLoop",
+                "count": "[length(variables('luScripts').runbooks)]"
+            },
+            "properties": {
+                "description": "[variables('luScripts').runbooks[copyIndex()].description]",
+                "runbookType": "[variables('luScripts').runbooks[copyIndex()].type]",
+                "logVerbose": true,
+                "logProgress": false,
+                "publishContentLink": {
+                    "uri": "[variables('luScripts').runbooks[copyIndex()].url]",
+                    "version": "[variables('luScripts').runbooks[copyIndex()].version]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/schedules",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(parameters('automationAccountName'), '/', 'LoopUpBillingScriptSchedule')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
+//                "startTime": "[variables('scheduleStartTime')]",
+                "startTime": "",
+                "expiryTime": "9999-12-31T23:59:00+00:00",
+                "interval": 1,
+                "frequency": "Month",
+                "timeZone": "Europe/London",
+                "advancedSchedule": {
+                    "monthDays": [
+                        30
+                    ]
+                 }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/jobSchedules",
+            "apiVersion": "2015-10-31",
+            "name": "[concat(parameters('automationAccountName'), '/', parameters('schedulerJobGuid'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
+            ],
+            "properties": {
+                "runbook": {
+                    "name": "[variables('luScripts').runbooks.name]"
+                },
+                "schedule": {
+                    "name": "LoopUpBillingScriptSchedule"
+                }
+            }
+        }
     ]
 }
