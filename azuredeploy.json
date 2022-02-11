@@ -98,12 +98,12 @@
                 {
                     "type": "Microsoft.Automation/automationAccounts/credentials",
                     "apiVersion": "2020-01-13-preview",
-                    "name": "[concat(variables('automationAccountName').name, '/', 'Credentials')]",
+                    "name": "[concat(variables('automationAccountName').name, '/', 'LoopUpServiceAccountCredentials')]",
                     "dependsOn": [
                         "[variables('automationAccountName').name]"
                     ],
                     "properties": {
-                        "description": "LoopUp Service Account Credentials",
+                        "description": "LoopUp Service Account Credentials. The infomration entered in this credentails object is encrypted and is NOT accessible by LoopUp.",
                         "password": "[parameters('LoopUpServiceAccountPassword')]",
                         "userName": "[parameters('LoopUpServiceAccountUsername')]"
                     }
