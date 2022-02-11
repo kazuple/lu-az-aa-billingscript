@@ -1,0 +1,1 @@
+Register-AzAutomationScheduledRunbook -AutomationAccountName "LU-AA-BillingScript" -Name "BillingScript-Runbook" -ScheduleName "BillingScript-Schedule"
