@@ -32,7 +32,7 @@ $proRata = "1"
 $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
 
 #Teams data collection
-$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True*') -and ($_.OnPremLineUri -notlike '')} | Select-Object OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
+$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object LineUri,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 
 #Convert data to Json
 $output = ConvertTo-Json $billingData
@@ -44,4 +44,4 @@ Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType appl
 Get-PSSession | Where-Object {$_.ComputerName -like "*api*"} | Remove-PSSession
 
 #Output
-Write-Host $output
+Write-Output $output
