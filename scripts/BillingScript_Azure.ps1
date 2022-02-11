@@ -42,3 +42,6 @@ Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType appl
 
 #Remove PS Session
 Get-PSSession | Where-Object {$_.ComputerName -like "*api*"} | Remove-PSSession
+
+#Output
+Write-Host $output
