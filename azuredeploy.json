@@ -23,6 +23,20 @@
 //                "description": "Specify the runbook schedule name of your Automation Account"
 //            }
 //        },
+        "rgName": {
+            "type": "string",
+            "defaultValue": "LoopUp-BillingScript",
+            "metadata": {
+                "description": "Name of the resourceGroup to create"
+            }
+            },
+        "rgLocation": {
+            "type": "string",
+            "defaultValue": "[deployment().location]",
+            "metadata": {
+                "description": "Location for the resourceGroup"
+            }
+        },
         "automationRegion": {
             "type": "string",
             "allowedValues": [
@@ -94,20 +108,36 @@
         "runbookName": {
             "name": "BillingScript-Runbook"
         },
+        "scheduleRunbookName": {
+            "name": "BillingScript-ScheduleRunbook"
+        },
         "scheduleName": {
             "name": "BillingScript-Schedule"
         },
-        
         "luScripts": {
             "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Azure.ps1",
             "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
-            },
+        },
+        "luScriptsSchedule": {
+            "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Schedule.ps1",
+            "description": "Runbook to deploy LUCT billing script schedule to customers Azure tenant"
+        },
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
             "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
         }
     },
     "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2021-04-01",
+            "name": "[parameters('rgName')]",
+            "location": "[parameters('rgLocation')]",
+            "tags": {
+                "tagName1": "tagValue1",
+                "tagName2": "tagValue2"
+            }
+        },
         {
             "type": "Microsoft.Automation/automationAccounts",
             "apiVersion": "2021-06-22",
@@ -123,6 +153,25 @@
                 }
             },
             "resources": [
+                {
+                    "type": "Microsoft.Automation/automationAccounts/runbooks",
+                    "apiVersion": "2019-06-01",
+                    "name": "[concat(variables('automationAccountName').name, '/', variables('scheduleRunbookName').name)]",
+                    "location": "[parameters('automationRegion')]",
+                    "dependsOn": [
+                        "[variables('automationAccountName').name]"
+                    ],
+                    "properties": {
+                        "description": "[variables('luScriptsSchedule').description]",
+                        "runbookType": "PowerShell",
+                        "logVerbose": true,
+                        "logProgress": false,
+                        "publishContentLink": {
+                            "uri": "[variables('luScriptsSchedule').url]",
+                            "version": "1.0.0.0"
+                        }
+                    }
+                },
                 {
                     "type": "Microsoft.Automation/automationAccounts/runbooks",
                     "apiVersion": "2019-06-01",
