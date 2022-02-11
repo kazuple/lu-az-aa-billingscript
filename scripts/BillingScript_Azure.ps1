@@ -14,7 +14,6 @@ $endpointUrl = "https://prod-166.westus.logic.azure.com:443/workflows/7c0497e062
 #Teams PowerShell Authentication
 $credentials = Get-AutomationPSCredential -Name 'LoopUpServiceAccountCredentials'
 Connect-MicrosoftTeams -Credential $credentials 
-Write-Output "1/4 - Connected to Teams Tenant via PowerShell"
 
 #First/Last Day of Month
 #$currentDate = Get-Date -DisplayHint Date -Format "dd/MM/yyyy"
@@ -34,15 +33,12 @@ $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -
 
 #Teams data collection
 $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.Enabled -like '*True*') -and ($_.OnPremLineUri -notlike '')} | Select-Object OnPremLineURI,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='StartMonth'; Expression = {$firstDayOfMonth}}, @{Name='EndMonth'; Expression = {$lastDayOfMonth}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
-Write-Output "2/4 - Collected Billing Data"
 
 #Convert data to Json
 $output = ConvertTo-Json $billingData
 
 #Send data to endpoint url
 Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType application/json
-Write-Output "3/4 - Data sent to LoopUp"
 
 #Remove PS Session
 Get-PSSession | Where-Object {$_.ComputerName -like "*api*"} | Remove-PSSession
-Write-Output "4/4 - PowerShell Session Removed"
