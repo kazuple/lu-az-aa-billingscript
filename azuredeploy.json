@@ -21,13 +21,13 @@
                 "description": "Specify the region for your automation account."
             }
         },
-        "LoopUpServiceUsername": {
+        "LoopUpServiceAccountUsername": {
             "type": "string",
             "metadata": {
                 "description": "Enter your LoopUp Service account username, ex: loopup.service@contoso.com. This will be used to query Teams to export required billing information."
             }
         },
-        "LoopUpServicePassword": {
+        "LoopUpServiceAccountPassword": {
             "type": "securestring",
             "metadata": {
                 "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the automation assets."
@@ -104,8 +104,8 @@
                     ],
                     "properties": {
                         "description": "LoopUp Service Account Credentials",
-                        "password": "[parameters('LoopUpServicePassword')]",
-                        "userName": "[parameters('LoopUpServiceUsername')]"
+                        "password": "[parameters('LoopUpServiceAccountPassword')]",
+                        "userName": "[parameters('LoopUpServiceAccountUsername')]"
                     }
                 },  
                 {
