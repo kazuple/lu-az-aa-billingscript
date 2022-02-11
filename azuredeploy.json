@@ -2,27 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-//        "automationAccountName": {
-//            "defaultValue": "LU-AA-BillingScript",
-//            "type": "String",
-//            "metadata": {
-//                "description": "Specify the name of your Automation Account"
-//            }
-//        },
-//        "runbookName": {
-//            "defaultValue": "BillingScript-Runbook",
-//            "type": "String",
-//            "metadata": {
-//                "description": "Specify the runbook name of your Automation Account"
-//            }
-//        },
-//        "scheduleName": {
-//            "defaultValue": "BillingScript-Schedule",
-//            "type": "String",
-//            "metadata": {
-//                "description": "Specify the runbook schedule name of your Automation Account"
-//            }
-//        },
         "automationRegion": {
             "type": "string",
             "allowedValues": [
@@ -39,7 +18,7 @@
                 "westcentralus"
             ],
             "metadata": {
-                "description": "Specify the region for your automation account"
+                "description": "Specify the region for your automation account."
             }
         },
         "LoopUpServiceUsername": {
@@ -51,43 +30,18 @@
         "LoopUpServicePassword": {
             "type": "securestring",
             "metadata": {
-                "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the Automation assets."
+                "description": "Enter the password for the LoopUp Service account user. The password is encrypted during runtime and in the automation assets."
             }
         },
         "schedulerJobGuid": {
             "type": "string",
             "defaultValue": "[newGuid()]",
             "metadata": {
-              "description": "GUID for the schedule creation - create a unique before deploy"
+              "description": "GUID generator for the schedule to runbook association."
             }
         }
-//        "baseTime": {
-//        "type": "string",
-//        "defaultValue": "[utcNow('u')]",
-//        "metadata": {
-//            "description": "Schedule will start one hour from this time."
-//       }
-//    }
 },
     "variables": {
-//        "schedulerJobGuid": {
-//            "guid": "[newGuid()]"
-//        },
-//        "scheduleStartTime": {
-//            "startTime": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
-//        },
-//        "assets": {
-//            "aaVariables": {
-//                "luServiceAccountUsername": {
-//                    "name": "luServiceAccountUsername",
-//                    "description": "LoopUp Service Account: Username"
-//                },
-//                "luServiceAccountPassword": {
-//                    "name": "luServiceAccountPassword",
-//                    "description": "LoopUp Service Account: Password"
-//                }
-//            }
-//        },
         "automationAccountName": {
             "name": "LU-AA-BillingScript"
         },
@@ -99,7 +53,7 @@
         },
         "luScripts": {
             "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Azure.ps1",
-            "description": "Runbook to deploy LUCT billing script to customers Azure tenant"
+            "description": "Runbook to deploy LoopUp Cloud Telephony billing script to customers Azure tenant."
         },
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
@@ -176,7 +130,7 @@
                         "[variables('automationAccountName').name]"
                     ],
                     "properties": {
-                        "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th at 0300 UK time.",
+                        "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th.",
         //                "startTime": "[variables('scheduleStartTime')]",
                         "startTime": "",
                         "expiryTime": "9999-12-31T23:59:00+00:00",
@@ -195,7 +149,6 @@
                     "apiVersion": "2015-10-31",
                     "name": "[concat(variables('automationAccountName').name, '/', parameters('schedulerJobGuid'))]",
                     "dependsOn": [
-//                        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/schedules/', parameters('scheduleName'))]"
                         "[variables('automationAccountName').name]",
                         "[resourceId('Microsoft.Automation/automationAccounts/runbooks', variables('automationAccountName').name, variables('runbookName').name)]"
                     ],
