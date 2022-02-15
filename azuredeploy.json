@@ -113,7 +113,6 @@
                     "apiVersion": "2020-01-13-preview",
                     "name": "[concat(variables('automationAccountName').name, '/', variables('MicrosoftTeams').name)]",
                     "dependsOn": [
-//                        "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccountName'))]"
                         "[variables('automationAccountName').name]"
                     ],
                     "properties": {
@@ -131,7 +130,6 @@
                     ],
                     "properties": {
                         "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th.",
-        //                "startTime": "[variables('scheduleStartTime')]",
                         "startTime": "",
                         "expiryTime": "9999-12-31T23:59:00+00:00",
                         "interval": 1,
@@ -139,6 +137,7 @@
                         "timeZone": "Europe/London",
                         "advancedSchedule": {
                             "monthDays": [
+                                -1,
                                 30
                             ]
                         }
