@@ -14,18 +14,16 @@ $daysInMonth = ($lastDaysInMonth-$firstDaysInMonth).Days + 1
 #Pro Rata
 $proRata = "1"
 
+#OVRP Filter
+$OVRPs = @("LoopUp AMER","LoopUp EMEA","LoopUp APAC","LoopUp LATAM","LoopUp STHAF","LoopUp AUSTL","LoopUp SA CPE")
+
 #Tenant OnMicrosoft Domain
 $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
 
 #Teams data collection
-
-###############
-$OVRPs = @("LoopUp AMER","LoopUp EMEA","LoopUp APAC","LoopUp LATAM","LoopUp STHAF","LoopUp AUSTL","LoopUp SA CPE")
-Get-CsOnlineUser | Where-Object {$_.Enabled -eq $True -and $OVRPs -contains $_.OnlineVoiceRoutingPolicy} | Select-Object UserPrincipalName, LineURI
-###############
-
-$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
+$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and $OVRPs -contains $_.OnlineVoiceRoutingPolicy} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 #$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object LineUri,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
+
 
 #Convert data to Json
 $output = ConvertTo-Json $billingData -Depth 1
