@@ -42,7 +42,6 @@
         },
         "filterOVRP": {
             "type": "string",
-            "defaultValue": "",
             "metadata": {
               "description": "OnlineVoiceRoutingPolicy can be entered here to filter the scope of the data gathering process."
             }
@@ -65,6 +64,10 @@
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
             "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
+        },
+        "filterOVRP": {
+            "name": "FilterOVRP",
+            "value": "[parameters('filterOVRP')]"
         }
     },
     "resources": [
@@ -84,15 +87,16 @@
             },
             "resources": [
                 {
-                    "type": "variables",
+                    "type": "Microsoft.Automation/automationAccounts/variables",
                     "apiVersion": "2021-04-01",
                     "name": "[concat(variables('automationAccountName').name, '/', 'filterOVRP')]",
                     "dependsOn": [
                         "[variables('automationAccountName').name]"
                     ],
                     "properties": {
-                        "description": "Used to filter the data gathering output based upon assigned OnlineVoiceRoutingPolicy.",
-                        "value": "[parameters('filterOVRP')]"
+                        "description": "Used to filter the data gathering output based upon specified OnlineVoiceRoutingPolicy.",
+                        "isEncrypted": "false",
+                        "value": "[concat('\"', parameters('filterOVRP'), '\"')]"
                     }
                 },
                 {
