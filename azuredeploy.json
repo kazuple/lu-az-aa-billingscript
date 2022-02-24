@@ -42,7 +42,7 @@
         },
         "filterOVRP": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "N/A",
             "metadata": {
               "description": "OnlineVoiceRoutingPolicy can be entered here to filter the scope of the data gathering process."
             }

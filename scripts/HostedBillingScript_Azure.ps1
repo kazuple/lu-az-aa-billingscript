@@ -20,7 +20,7 @@ $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -
 $filterOVRP = Get-AutomationVariable -Name "filterOVRP"
 
 #filterOVRP
-if ($filterOVRP -eq "") {
+if ($filterOVRP -eq "N/A") {
     $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 }else {
     $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($filterOVRP -like "*$filterOVRP*") -contains $_.OnlineVoiceRoutingPolicy} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}            
