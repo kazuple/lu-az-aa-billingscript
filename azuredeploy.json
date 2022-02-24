@@ -59,7 +59,7 @@
             "name": "HostedBillingScript-Schedule"
         },
         "luScripts": {
-            "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Azure.ps1",
+            "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/HostedBillingScript_Azure.ps1",
             "description": "Runbook to deploy LoopUp Cloud Telephony hosted billing script to customers Azure tenant."
         },
         "MicrosoftTeams": {
