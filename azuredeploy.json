@@ -39,25 +39,35 @@
             "metadata": {
               "description": "GUID generator for the schedule to runbook association."
             }
+        },
+        "filterOVRP": {
+            "type": "string",
+            "metadata": {
+              "description": "OnlineVoiceRoutingPolicy can be entered here to filter the scope of the data gathering process."
+            }
         }
 },
     "variables": {
         "automationAccountName": {
-            "name": "LU-AA-BillingScript"
+            "name": "LU-AA-HostedBillingScript"
         },
         "runbookName": {
-            "name": "BillingScript-Runbook"
+            "name": "HostedBillingScript-Runbook"
         },
         "scheduleName": {
-            "name": "BillingScript-Schedule"
+            "name": "HostedBillingScript-Schedule"
         },
         "luScripts": {
             "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Azure.ps1",
-            "description": "Runbook to deploy LoopUp Cloud Telephony billing script to customers Azure tenant."
+            "description": "Runbook to deploy LoopUp Cloud Telephony hosted billing script to customers Azure tenant."
         },
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
             "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
+        },
+        "filterOVRP": {
+            "name": "FilterOVRP",
+            "value": "[parameters('filterOVRP')]"
         }
     },
     "resources": [
@@ -76,6 +86,19 @@
                 }
             },
             "resources": [
+                {
+                    "type": "Microsoft.Automation/automationAccounts/variables",
+                    "apiVersion": "2021-04-01",
+                    "name": "[concat(variables('automationAccountName').name, '/', 'filterOVRP')]",
+                    "dependsOn": [
+                        "[variables('automationAccountName').name]"
+                    ],
+                    "properties": {
+                        "description": "Used to filter the data gathering output based upon specified OnlineVoiceRoutingPolicy.",
+                        "isEncrypted": "false",
+                        "value": "[concat('\"', parameters('filterOVRP'), '\"')]"
+                    }
+                },
                 {
                     "type": "Microsoft.Automation/automationAccounts/runbooks",
                     "apiVersion": "2019-06-01",
@@ -129,7 +152,7 @@
                         "[variables('automationAccountName').name]"
                     ],
                     "properties": {
-                        "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th.",
+                        "description": "Runs the LoopUp Cloud Telephony hosted billing script each month on the 30th.",
                         "startTime": "",
                         "expiryTime": "9999-12-31T23:59:00+00:00",
                         "interval": 1,
