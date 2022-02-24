@@ -49,17 +49,17 @@
 },
     "variables": {
         "automationAccountName": {
-            "name": "LU-AA-BillingScript"
+            "name": "LU-AA-HostedBillingScript"
         },
         "runbookName": {
-            "name": "BillingScript-Runbook"
+            "name": "HostedBillingScript-Runbook"
         },
         "scheduleName": {
-            "name": "BillingScript-Schedule"
+            "name": "HostedBillingScript-Schedule"
         },
         "luScripts": {
             "url": "https://raw.githubusercontent.com/kazuple/lu-az-aa-billingscript/main/scripts/BillingScript_Azure.ps1",
-            "description": "Runbook to deploy LoopUp Cloud Telephony billing script to customers Azure tenant."
+            "description": "Runbook to deploy LoopUp Cloud Telephony hosted billing script to customers Azure tenant."
         },
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
@@ -152,7 +152,7 @@
                         "[variables('automationAccountName').name]"
                     ],
                     "properties": {
-                        "description": "Runs the LoopUp Cloud Telephony billing script each month on the 30th.",
+                        "description": "Runs the LoopUp Cloud Telephony hosted billing script each month on the 30th.",
                         "startTime": "",
                         "expiryTime": "9999-12-31T23:59:00+00:00",
                         "interval": 1,

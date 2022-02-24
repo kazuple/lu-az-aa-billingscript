@@ -13,14 +13,24 @@ $daysInMonth = ($lastDaysInMonth-$firstDaysInMonth).Days + 1
 #Pro Rata
 $proRata = "1"
 
-#OVRP Filter
-$OVRPs = @("LoopUp AMER","LoopUp EMEA","LoopUp APAC","LoopUp LATAM","LoopUp STHAF","LoopUp AUSTL","LoopUp SA CPE")
-
 #Tenant OnMicrosoft Domain
 $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
 
+#Automation Account Variables
+$filterOVRP = Get-AutomationVariable -Name "filterOVRP"
+
+#filterOVRP
+if ($filterOVRP -eq "") {
+    $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
+}else {
+    $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($filterOVRP -match "$filterOVRP*") -contains $_.OnlineVoiceRoutingPolicy} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}            
+}
+
+#OVRP Filter
+#$OVRPs = @("LoopUp AMER","LoopUp EMEA","LoopUp APAC","LoopUp LATAM","LoopUp STHAF","LoopUp AUSTL","LoopUp SA CPE")
+
+
 #Teams data collection
-$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and $OVRPs -contains $_.OnlineVoiceRoutingPolicy} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 #$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($OVRPs -contains $_.OnlineVoiceRoutingPolicy)} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 #$billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object LineUri,OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 
@@ -31,7 +41,7 @@ $output = ConvertTo-Json $billingData -Depth 1
 Invoke-RestMethod -Method Post -Uri $endpointUrl -Body $output -ContentType application/json
 
 #Remove PS Session
-Get-PSSession | Where-Object {$_.ComputerName -like "*api*"} | Remove-PSSession
+#Get-PSSession | Where-Object {$_.ComputerName -like "*api*"} | Remove-PSSession
 
 #Output
 Write-Output $output
