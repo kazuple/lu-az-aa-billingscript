@@ -1,6 +1,9 @@
 # Input LoopUp Service account username
-param ($luServiceAccountUsername)
-param ($filterOVRP)
+Param
+(
+    [Parameter(Mandatory = $true)] [string] $luServiceAccountUsername,
+    [Parameter(Mandatory = $false)] [string] $filterOVRP
+)
 
 #Teams PowerShell
 $User = "$luServiceAccountUsername"
