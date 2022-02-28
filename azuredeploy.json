@@ -40,7 +40,7 @@
               "description": "GUID generator for the schedule to runbook association."
             }
         },
-        "filterOVRP": {
+        "filterOutput": {
             "type": "string",
             "defaultValue": "N/A",
             "metadata": {
@@ -93,7 +93,7 @@
                     "properties": {
                         "description": "Used to filter the data gathering output based upon specified OnlineVoiceRoutingPolicy.",
                         "isEncrypted": "false",
-                        "value": "[concat('\"', parameters('filterOVRP'), '\"')]"
+                        "value": "[concat('\"', parameters('filterOutput'), '\"')]"
                     }
                 },
                 {
