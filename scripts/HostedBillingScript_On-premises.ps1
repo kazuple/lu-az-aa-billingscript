@@ -2,7 +2,7 @@
 Param
 (
     [Parameter(Mandatory = $true)] [string] $luServiceAccountUsername,
-    [Parameter(Mandatory = $false)] [string] $filterOVRP
+    [Parameter(Mandatory = $false)] [string] $filterOutput
 )
 
 #Teams PowerShell
@@ -26,10 +26,10 @@ $proRata = "1"
 $tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
 
 #Teams data collection
-if ($filterOVRP -eq "") {
+if ($filterOutput -eq "") {
     $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
 }else {
-    $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($filterOVRP -like "*$filterOVRP*") -contains $_.OnlineVoiceRoutingPolicy} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}            
+    $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($filterOutput -like "*$filterOutput*") -contains $_.OnlineVoiceRoutingPolicy} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}            
 }
 
 #Convert data to Json
