@@ -186,6 +186,7 @@
                         "timeZone": "Europe/London",
                         "advancedSchedule": {
                             "monthDays": [
+                                -1,
                                 31
                             ]
                         }
