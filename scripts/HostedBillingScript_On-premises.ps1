@@ -7,7 +7,7 @@ Param
 
 #Teams PowerShell
 $User = "$luServiceAccountUsername"
-$PWord = Get-Content 'securestring.txt' | ConvertTo-SecureString
+$PWord = Get-Content 'C:\LoopUpHostedBillingScript\securestring.txt' | ConvertTo-SecureString
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
 Connect-MicrosoftTeams -Credential $credential
 
