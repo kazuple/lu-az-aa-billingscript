@@ -14,7 +14,7 @@ $daysInMonth = ($lastDaysInMonth-$firstDaysInMonth).Days + 1
 $proRata = "1"
 
 #Tenant OnMicrosoft Domain
-$tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
+$tenantVerifiedDomain = (Get-CsTenant).DisplayName
 
 #Automation Account Variables
 $filterOVRP = Get-AutomationVariable -Name "filterOVRP"
