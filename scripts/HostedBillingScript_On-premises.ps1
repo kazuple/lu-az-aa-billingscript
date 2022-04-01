@@ -23,7 +23,7 @@ $daysInMonth = ($lastDaysInMonth-$firstDaysInMonth).Days + 1
 $proRata = "1"
 
 #Tenant OnMicrosoft Domain
-$tenantVerifiedDomain = (Get-CsTenant).VerifiedDomains.Name | Where-Object {$_ -match "^([^.]+).onmicrosoft.com"}
+$tenantVerifiedDomain = (Get-CsTenant).DisplayName
 
 #Teams data collection
 if ($filterOutput -eq "") {
