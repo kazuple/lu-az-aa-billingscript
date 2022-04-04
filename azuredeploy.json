@@ -93,7 +93,7 @@
         },
         "MicrosoftTeams": {
             "name": "MicrosoftTeams",
-            "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.3.1.0.nupkg"
+            "url": "https://devopsgallerystorage.blob.core.windows.net/packages/microsoftteams.4.0.0.nupkg"
         }
     },
     "resources": [
