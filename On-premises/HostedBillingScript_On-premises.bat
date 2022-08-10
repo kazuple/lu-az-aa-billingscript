@@ -1,1 +1,1 @@
-powershell.exe -ExecutionPolicy Bypass -File C:\LoopUpHostedBillingScript\HostedBillingScript_On-premises.ps1 -luServiceAccountUsername admin@M365x643811.onmicrosoft.com -verbose >> C:\LoopUpHostedBillingScript\LoopUpHostedBillingScript.log
+powershell.exe -ExecutionPolicy Bypass -File C:\LoopUpHostedBillingScript\HostedBillingScript_On-premises.ps1 -luServiceAccountUsername [LoopUp Service Account Password] -verbose >> C:\LoopUpHostedBillingScript\LoopUpHostedBillingScript.log
