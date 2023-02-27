@@ -33,7 +33,7 @@ $proRata = "1"
 $tenantVerifiedDomain = (Get-CsTenant).DisplayName
 
 #Tenant ID
-$tenantId = (Get-CsTenant).TenantId.Guid
+$tenantId = (Get-CsTenant).TenantID
 
 #Teams data collection
 if ($filterOutput -eq "") {
