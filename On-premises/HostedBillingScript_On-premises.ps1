@@ -32,7 +32,7 @@ $proRata = "1"
 #Tenant OnMicrosoft Domain
 $tenantVerifiedDomain = (Get-CsTenant).DisplayName
 
-#Tenant Guid
+#Tenant ID
 $tenantId = (Get-CsTenant).TenantId.Guid
 
 #Teams data collection

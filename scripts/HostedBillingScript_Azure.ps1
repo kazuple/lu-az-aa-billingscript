@@ -1,5 +1,5 @@
 #LoopUp Endpoint URL
-$endpointUrl = "https://prod-166.westus.logic.azure.com:443/workflows/7c0497e062234ff2ae617fd21231e89b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1eveUH7pqDXn0lrY9dspfuMXBeTIwPgrMAynFPP-5Lo"
+$endpointUrl = "https://prod-116.westus.logic.azure.com:443/workflows/51082ef9eaf04300a64f250b4faa22d6/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=b72Wpa2uw86bK4zf2QjqsApSEhZMqe8qebB9kRvD1Ls"
 
 #Teams PowerShell Authentication
 $credentials = Get-AutomationPSCredential -Name 'LoopUpServiceAccountCredentials'
@@ -16,14 +16,41 @@ $proRata = "1"
 #Tenant OnMicrosoft Domain
 $tenantVerifiedDomain = (Get-CsTenant).DisplayName
 
+#Tenant ID
+$tenantId = (Get-CsTenant).TenantId.Guid
+
 #Automation Account Variables
 $filterOVRP = Get-AutomationVariable -Name "filterOVRP"
 
-#filterOVRP
+#Teams data collection
 if ($filterOVRP -eq "N/A") {
-    $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}
+    $billingData = Get-CsOnlineUser | where-object {
+        $_.EnterpriseVoiceEnabled -like '*True*' -and ($_.LineUri -notlike '')
+    } | Select-Object @{
+        Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}
+    }, OnlineVoiceRoutingPolicy, @{
+        Name='TenantId'; Expression = {$tenantId} 
+    }, @{
+        Name='TenantName'; Expression = {$tenantVerifiedDomain}
+    }, @{
+        Name='DaysInMonth'; Expression = {$daysInMonth}
+    }, @{
+        Name='ProRata'; Expression = {$proRata}
+    }
 }else {
-    $billingData = Get-CsOnlineUser | where-object {$_.EnterpriseVoiceEnabled -like '*True*' -and ($_.OnlineVoiceRoutingPolicy -like "*$filterOVRP*")} | Select-Object @{Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}}, OnlineVoiceRoutingPolicy, @{Name='TenantName'; Expression = {$tenantVerifiedDomain}}, @{Name='DaysInMonth'; Expression = {$daysInMonth}}, @{Name='ProRata'; Expression = {$proRata}}            
+    $billingData = Get-CsOnlineUser | where-object {
+        $_.EnterpriseVoiceEnabled -like '*True*' -and ($_.OnlineVoiceRoutingPolicy -like "*$filterOutput*")
+    } | Select-Object @{
+        Name='LineUri'; Expression={$_.LineURI.ToLower().replace("tel:+","")}
+    }, OnlineVoiceRoutingPolicy, @{
+        Name='TenantId'; Expression = {$tenantId} 
+    }, @{
+        Name='TenantName'; Expression = {$tenantVerifiedDomain}
+    }, @{
+        Name='DaysInMonth'; Expression = {$daysInMonth}
+    }, @{
+        Name='ProRata'; Expression = {$proRata}       
+    }
 }
 
 #Convert data to Json
